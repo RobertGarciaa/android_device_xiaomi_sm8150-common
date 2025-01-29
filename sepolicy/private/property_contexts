@@ -26,3 +26,6 @@ vendor.sys.camerainfo                                                           
 
 # pen gen2
 persist.mi_pen.gen                                                                                  u:object_r:mi_pen_gen_prop:s0 exact string
+
+# Bootanimation
+ro.bootanim.set_orientation_4630946545580055169                                                     u:object_r:surfaceflinger_prop:s0 exact enum ORIENTATION_0 ORIENTATION_90 ORIENTATION_180 ORIENTATION_270
