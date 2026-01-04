@@ -1,0 +1,19 @@
+android_app {
+    name: "XiaomiPad5HwCtrl",
+    srcs: [ "src/**/*.kt" ],
+    resource_dirs: ["res"],
+    certificate: "platform",
+    platform_apis: true,
+    system_ext_specific: true,
+    privileged: true,
+
+    static_libs: [
+        "custom.hardware.hwcontrol-V2-java",
+        "org.lineageos.settings.resources",
+        "androidx.preference_preference",
+    ],
+
+    required: [
+        "custom.hardware.hwcontrol-service",
+    ],
+}

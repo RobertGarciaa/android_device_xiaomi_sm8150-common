@@ -1,0 +1,37 @@
+//
+// Copyright (C) 2023 Harshit Jain <dev-harsh1998@hotmail.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+aidl_interface {
+    name: "custom.hardware.hwcontrol",
+    srcs: ["custom/hardware/hwcontrol/*.aidl"],
+    owner: "Harshit",
+    stability: "vintf",
+    vendor_available: true,
+    backend: {
+        ndk: {
+            enabled: true,
+        },
+        cpp: {
+            enabled: true,
+        },
+        rust: {
+            enabled: true,
+        },
+        java: {
+            platform_apis: true,
+        },
+    },
+    versions_with_info: [
+        {
+            version: "1",
+            imports: [],
+        },
+        {
+            version: "2",
+            imports: [],
+        },
+    ],
+    frozen: true,
+}
