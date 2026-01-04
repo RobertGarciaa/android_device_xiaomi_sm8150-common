@@ -190,6 +190,12 @@ PRODUCT_PACKAGES += \
     LunarisDolby \
     XiaomiParts
 
+# Xiaomi Pad 5 hardware controls (also installs the required hwcontrol HAL)
+ifeq ($(TARGET_IS_TABLET),true)
+PRODUCT_PACKAGES += \
+    XiaomiPad5HwCtrl
+endif
+
 # Display
 PRODUCT_PACKAGES += \
     android.hardware.graphics.composer@2.4-service \
