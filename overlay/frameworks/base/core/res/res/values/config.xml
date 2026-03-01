@@ -338,4 +338,8 @@
     <!-- Whether WM DisplayContent supports high performance transitions
          (lower-end devices may want to disable) -->
     <bool name="config_deviceSupportsHighPerfTransitions">false</bool>
+
+    <!-- Sets whether menu shortcuts should be displayed on panel menus when
+         a keyboard is present. -->
+    <bool name="config_showMenuShortcutsWhenKeyboardPresent">true</bool>
 </resources>
