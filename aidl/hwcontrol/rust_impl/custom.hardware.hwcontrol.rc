@@ -24,7 +24,7 @@ on property:persist.mi_pen.gen=2
 on property:persist.mi_pen.gen=1
     write /sys/touchpanel/pen_gen2_force 0
 
-service vendor.hw-aidl-rs /system/bin/custom.hardware.hwcontrol-service
+service vendor.hw-aidl-rs /vendor/bin/custom.hardware.hwcontrol-service
     class hal
     user system
     group system input uhid
