@@ -137,7 +137,6 @@ $(call soong_config_set_bool,android_hardware_audio,skip_speaker_layout_channel_
 
 # Audio configs
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/audio/dax-default.xml:$(TARGET_COPY_OUT_VENDOR)/etc/dolby/dax-default.xml \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/audio/,$(TARGET_COPY_OUT_VENDOR)/etc)
 
 PRODUCT_COPY_FILES += \
@@ -185,7 +184,6 @@ endif
 # Device-specific settings
 PRODUCT_PACKAGES += \
     DSPVolumeSynchronizer \
-    LunarisDolby \
     XiaomiParts
 
 # Display
