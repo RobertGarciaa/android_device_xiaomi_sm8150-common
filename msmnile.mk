@@ -187,8 +187,10 @@ PRODUCT_COPY_FILES += \
 endif
 
 # Device-specific settings
+# DSPVolumeSynchronizer belongs to the crDroid vendor tree and is not present in
+# PixelOS, so it is dropped. XiaomiParts comes from this tree and only needs the
+# Lineage settings resources plus the motor HIDL Java binding.
 PRODUCT_PACKAGES += \
-    DSPVolumeSynchronizer \
     XiaomiParts
 
 # Display
