@@ -4,6 +4,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+from pathlib import Path
+
 from extract_utils.fixups_blob import (
     blob_fixup,
     blob_fixups_user_type,
@@ -60,7 +62,45 @@ blob_fixups: blob_fixups_user_type = {
         .regex_replace('<HID>0</HID>', '<HID>1</HID>'),
 }  # fmt: skip
 
-module = ExtractUtilsModule(
+def configure_qtigef_makefiles(vendor_path):
+    """Keep stock and nabu-patched GEF install rules mutually exclusive."""
+    bp_path = Path(vendor_path) / 'Android.bp'
+    marker = 'cc_prebuilt_library_shared {\n    name: "libqtigef",\n'
+    enabled = (
+        '    enabled: select(soong_config_variable("nabu_dolby", "replace_qtigef"), {\n'
+        '        true: false,\n'
+        '        default: true,\n'
+        '    }),\n'
+    )
+    bp = bp_path.read_text()
+    if bp.count(marker) != 1:
+        raise ValueError('Expected exactly one shared libqtigef prebuilt')
+    if marker + enabled not in bp:
+        bp_path.write_text(bp.replace(marker, marker + enabled, 1))
+
+    # Also preserve the product-package guard when vendor makefiles regenerate.
+    mk_path = Path(vendor_path) / 'sm8150-common-vendor.mk'
+    guard = (
+        '# Dolby products install libqtigef_nabu at the same path instead.\n'
+        'ifneq ($(TARGET_ENABLE_XIAOMI_DOLBY),true)\n'
+        'PRODUCT_PACKAGES += libqtigef\n'
+        'endif\n'
+    )
+    mk = mk_path.read_text()
+    if guard not in mk:
+        entry = '    libqtigef \\\n'
+        if mk.count(entry) != 1:
+            raise ValueError('Expected exactly one generated libqtigef product entry')
+        mk_path.write_text(mk.replace(entry, '', 1).rstrip() + '\n\n' + guard)
+
+
+class NabuAwareExtractUtilsModule(ExtractUtilsModule):
+    def write_makefiles(self, legacy, extract_factory):
+        super().write_makefiles(legacy, extract_factory)
+        configure_qtigef_makefiles(self.vendor_path)
+
+
+module = NabuAwareExtractUtilsModule(
     'sm8150-common',
     'xiaomi',
     blob_fixups=blob_fixups,
